@@ -1,0 +1,6 @@
+[submodule "grbl"]
+	path = grbl
+	url = ./grbl/
+[submodule "GrblHoming"]
+	path = GrblHoming
+	url = ./GrblHoming/
