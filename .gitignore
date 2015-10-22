@@ -4,3 +4,9 @@
 *.bac
 *.pdf
 *.log
+
+# Latex Zeugs
+*.aux
+*.synctex.gz
+*.synctex
+*.toc
