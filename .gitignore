@@ -4,9 +4,13 @@
 *.bac
 *.pdf
 *.log
+*.nc
+*.cnc
+*.ngc
 
 # Latex Zeugs
 *.aux
 *.synctex.gz
 *.synctex
 *.toc
+*.out
