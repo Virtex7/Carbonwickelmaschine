@@ -4,9 +4,17 @@
 *.bac
 *.pdf
 *.log
+*.nc
+*.cnc
+*.ngc
+
+3D-Modell/extern/*
 
 # Latex Zeugs
 *.aux
 *.synctex.gz
 *.synctex
 *.toc
+*.out
+*.nav
+*.snm
