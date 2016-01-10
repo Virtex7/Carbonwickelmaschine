@@ -24,6 +24,7 @@ private slots:
 
 private:
     Ui::carbonwickler_main *ui;
+    QString fileOpen();
 };
 
 #endif // CARBONWICKLER_MAIN_H
