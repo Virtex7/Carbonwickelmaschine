@@ -1,0 +1,34 @@
+==Einleitung==
+Ziel des Projektes ist eine Carbonwickelmaschine zu entwickeln um zylindrische und konische Wickelkörper mit unterschiedlichen Rovings bewickeln zu können. Auf diese weiße soll es möglich sein extrem leichte, verschwindungssteife und korrosionsbeständig Rohre herzustellen  die quasi immun gegen Wärmeausdehnung sind. Für diesen Zweck gibt es zwar bereits Maschinen, die aber entweder für deutlich größere Teile ausgelegt sind, oder die sehr teuer bzw. nicht mehr verfügbar sind. Beispiele für solche Maschinen sind: TODO
+
+===Spezifikationen===
+Die geplanten Spezifikationen für die Maschine sind:
+*Maximale Wickellänge 1200mm
+*Größter Durchmesser des Wickelkörpers 250mm
+*Verarbeitung von Carbon- und Glasfasern
+*Wickelvorgang PC-kontrolliert
+*Möglichst kostengünstiger Aufbau
+*Konstruktion und Fertigung der Maschine aus Aluminium und Holz
+*4 Achsen
+
+===Elektronik===
+*4 Schrittmotoren
+*GRBL-Board
+*Netzteil
+*Endschalter
+
+===PC Programm==
+*G-Code Generator mit graphischem Userinterface anhand von einstellbaren Parametern
+*Grbl Interface zum streamen des G-Codes und manuellem Verfahren
+
+==Konzept==
+Der Grundaufbau der der Wickelmaschine gleicht dem einer Drehbank. Es gibt eine Drehachse die den Wickelkörper rotiert, sowie einen Arm der auf einer Achse längs dem Wickelkörper bewegt wird. Dieser Arm führt den Roving und sorgt für eine exakte Platzierung, weshalb der Arm zusätzlich senkrecht zur Wickelachse bewegbar und rotierbar ist. Auf diese Weiße lässt sich der Abstand zwischen Wickelkörper und Arm varrieren sowie die Orientierung an den aktuellen Wickelwinkel anpassen. Zur Ansteuerung der Achsen kommen Schrittmotoren zum Einsatz, da diese zum einen vergleichsweise einfach und kostengünstig ansteuerbar sind und zum andern fertige Module mit Steppertreibern verfügbar sind. Über den oben beschriebenen drehbaren Arm wird der Roving zum Wickelkörper geführt, wobei dieser zuvor mit Epoxydharz getränkt werden muss, da dies je nach Gewebedicke nach dem Wickeln nur schlecht möglich ist. Außerdem ist durch die vorgesehene automatische Tränk- und Abstreifvorrichtung eine gleichmäßige Harzmenge garantiert. Durch eine variable Positionierung des Reitstocks sind Wickelkörper in beliebigen 
+
+
+==Mechanik==
+Der mechanische Aufbau der Wickelmaschine ist in Siemens NX modelliert. Manche Details wie Schrauben wurden dabei an irrelevanten Stellen weggelassen. Das Augenmerk liegt insbesondere auf den Teilen die in der Fräse selbst herzustellen sind, wie z.B. die Motorhalterungen, der Reitstock und die Verbindungen zu Teilen wie den Schrittmoten. Außerdem lässt sich in dem Maschinenmodell überprüfen, dass die Verbindungen und Lage der verschiedenen Teile zueinander stimmt.
+
+==Mathematik hinter dem Wickelvorgang
+
+==Software==
+TODO 
