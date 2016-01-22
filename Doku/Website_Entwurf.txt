@@ -1,6 +1,7 @@
 ==Einleitung==
-Ziel des Projektes ist eine Carbonwickelmaschine zu entwickeln um zylindrische und konische Wickelkörper mit unterschiedlichen Rovings bewickeln zu können. Auf diese weiße soll es möglich sein extrem leichte, verschwindungssteife und korrosionsbeständig Rohre herzustellen  die quasi immun gegen Wärmeausdehnung sind. Für diesen Zweck gibt es zwar bereits Maschinen, die aber entweder für deutlich größere Teile ausgelegt sind, oder die sehr teuer bzw. nicht mehr verfügbar sind. Beispiele für solche Maschinen sind: TODO
+Ziel des Projektes ist eine Carbonwickelmaschine zu entwickeln um zylindrische und konische Wickelkörper mit unterschiedlichen Rovings bewickeln zu können. Auf diese Weise soll es möglich sein extrem leichte, verschwindungssteife und korrosionsbeständig Rohre herzustellen  die quasi immun gegen Wärmeausdehnung sind. Für diesen Zweck gibt es zwar bereits Maschinen, die aber entweder für deutlich größere Teile ausgelegt sind, oder die sehr teuer bzw. nicht mehr verfügbar sind. Beispiele für solche Maschinen sind: TODO
 
+[[Datei:wickelmaschine_gesamt.png|300px|thumb|right|3D Modell der Wickelmaschine (Gesamtansicht)]]
 ===Spezifikationen===
 Die geplanten Spezifikationen für die Maschine sind:
 *Maximale Wickellänge 1200mm
@@ -17,18 +18,25 @@ Die geplanten Spezifikationen für die Maschine sind:
 *Netzteil
 *Endschalter
 
-===PC Programm==
+===PC Programm===
 *G-Code Generator mit graphischem Userinterface anhand von einstellbaren Parametern
-*Grbl Interface zum streamen des G-Codes und manuellem Verfahren
+*grbl Interface zum streamen des G-Codes und manuellem Verfahren
 
 ==Konzept==
-Der Grundaufbau der der Wickelmaschine gleicht dem einer Drehbank. Es gibt eine Drehachse die den Wickelkörper rotiert, sowie einen Arm der auf einer Achse längs dem Wickelkörper bewegt wird. Dieser Arm führt den Roving und sorgt für eine exakte Platzierung, weshalb der Arm zusätzlich senkrecht zur Wickelachse bewegbar und rotierbar ist. Auf diese Weiße lässt sich der Abstand zwischen Wickelkörper und Arm varrieren sowie die Orientierung an den aktuellen Wickelwinkel anpassen. Zur Ansteuerung der Achsen kommen Schrittmotoren zum Einsatz, da diese zum einen vergleichsweise einfach und kostengünstig ansteuerbar sind und zum andern fertige Module mit Steppertreibern verfügbar sind. Über den oben beschriebenen drehbaren Arm wird der Roving zum Wickelkörper geführt, wobei dieser zuvor mit Epoxydharz getränkt werden muss, da dies je nach Gewebedicke nach dem Wickeln nur schlecht möglich ist. Außerdem ist durch die vorgesehene automatische Tränk- und Abstreifvorrichtung eine gleichmäßige Harzmenge garantiert. Durch eine variable Positionierung des Reitstocks sind Wickelkörper in beliebigen 
+Der Grundaufbau der Wickelmaschine gleicht dem einer Drehbank. Es gibt eine Drehachse die den Wickelkörper rotiert, sowie einen Arm der auf einer Achse längs dem Wickelkörper bewegt wird. Dieser Arm führt den Roving und sorgt für eine exakte Platzierung, weshalb der Arm zusätzlich senkrecht zur Wickelachse bewegbar und rotierbar ist. Auf diese Weiße lässt sich der Abstand zwischen Wickelkörper und Arm varrieren sowie die Orientierung an den aktuellen Wickelwinkel anpassen. Zur Ansteuerung der Achsen kommen Schrittmotoren zum Einsatz, da diese zum einen vergleichsweise einfach und kostengünstig ansteuerbar sind und zum andern fertige Module mit Steppertreibern verfügbar sind. Über den oben beschriebenen drehbaren Arm wird der Roving zum Wickelkörper geführt, wobei dieser zuvor mit Epoxydharz getränkt werden muss, da dies je nach Gewebedicke nach dem Wickeln nur schlecht möglich ist. Außerdem ist durch die vorgesehene automatische Tränk- und Abstreifvorrichtung eine gleichmäßige Harzmenge garantiert. Durch eine variable Positionierung des Reitstocks sind Wickelkörper in beliebigen 
 
 
 ==Mechanik==
 Der mechanische Aufbau der Wickelmaschine ist in Siemens NX modelliert. Manche Details wie Schrauben wurden dabei an irrelevanten Stellen weggelassen. Das Augenmerk liegt insbesondere auf den Teilen die in der Fräse selbst herzustellen sind, wie z.B. die Motorhalterungen, der Reitstock und die Verbindungen zu Teilen wie den Schrittmoten. Außerdem lässt sich in dem Maschinenmodell überprüfen, dass die Verbindungen und Lage der verschiedenen Teile zueinander stimmt.
 
-==Mathematik hinter dem Wickelvorgang
+==Mathematik hinter dem Wickelvorgang==
+[[Datei:Carbonwickler matlab.jpg|300px|thumb|right|Matlab Simulation eines Wickelmusters]]
+Um die gewünschten Wickelmuster zu erzeugen ist einiges an Vorüberlegung notwendig gewesen. Das Hauptproblem besteht darin den Roving bei jedem Durchgang zielgenau mit einem definierten Versatz zum Vorherigen Durchgang auf das Rohr aufzubringen. Hiefür ist es wichtig den genauen Winkel der Spindelposition zu kennen sowie die exakte Position der vorherigen Wicklungen. Insbesondere die Enden an denen umgekehrt wird und entsprechend beschleunigt bzw. abgebremst wird können dabei zu Problemen führen. Um unterschiedliche Ansätze auszuprobieren wurden unter anderem Simulationen mit Matlab durchgeführt.
 
 ==Software==
-TODO 
+[[Datei:Carbowickler software.png|300px|thumb|right|Software zur G-code Erzeugung]]
+Die verwendete Steuerung basiert auf [https://github.com/grbl/grbl grbl], welche bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen bzw. streamen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme, weshalb es nicht nötig ist hierfür ein neues zu entwickeln. Stattdessen geht es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt. Hiefür wurde in C++ eine Software geschrieben die Anhand der eingestellten Parameter G-Code für die Maschine erzeugt. Anschließend wird dieser mit dem G-Code streamer an die Maschine übertragen und ausgeführt.
+
+=Github=
+Das Projekt wird bei Github gehostet:
+https://github.com/Virtex7/Carbonwickelmaschine
