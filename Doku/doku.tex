@@ -14,14 +14,75 @@
 \usepackage{graphicx}
 
 \begin{document}
-	\maketitle
-	\tableofcontents
-	\section{Überblick}
-		hier ist ein text....
-	
-	\section{Das Ziel}
-		neger!
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\section{Einleitung}
+Ziel des Projektes ist eine Carbonwickelmaschine zu entwickeln um zylindrische und konische Wickelkörper mit unterschiedlichen Rovings bewickeln zu können. Auf diese Weise soll es möglich sein extrem leichte, verschwindungssteife und korrosionsbeständig Rohre herzustellen die quasi immun gegen Wärmeausdehnung sind. Für diesen Zweck gibt es zwar bereits Maschinen, die aber entweder für deutlich größere Teile ausgelegt sind, oder die sehr teuer bzw. nicht mehr verfügbar sind. Beispiele für solche Maschinen sind: TODO
+
+\section{Spezifikationen und Überblick}
+Die geplanten Spezifikationen für die Maschine sind:
+
+\begin{itemize}
+    \item Maximale Wickellänge 1200mm
+    \item Größter Durchmesser des Wickelkörpers 250mm
+    \item Verarbeitung von Carbon- und Glasfasern
+    \item Wickelvorgang PC-kontrolliert
+    \item Möglichst kostengünstiger Aufbau
+    \item Konstruktion und Fertigung der Maschine aus Aluminium und Holz
+    \item 4 Achsen
+\end{itemize}
+
+\subsection{Elektronik}
+\begin{itemize}
+    \item 4 Schrittmotoren
+    \item GRBL-Board
+    \item Netzteil
+    \item Endschalter
+\end{itemize}
 
 
+\subsection{Programm}
+\begin{itemize}
+    \item G-Code Generator mit graphischem Userinterface anhand von einstellbaren Parametern
+    \item grbl Interface zum streamen des G-Codes und manuellem Verfahren
+\end{itemize}
+
+\section{Grundlagen}
+Um die Funktionsweise und den Aufbau der Wickelmaschine besser verstehen zu können sollen als erstes wichtige Grundlagen zu den verwendeten Faserwerkstoffen sowie dem Wickelvorgang erklärt werden.
+
+\subsection{Faserwerkstoffe}
+Carbon, Glasfaser, Matrix (Epoxy/polyesterharz (Schrumpfen)), Härten
+
+\subsection{Wickelvorgang}
+
+\subsubsection{Mathematik hinter dem Wickelvorgang}
+Um die gewünschten Wickelmuster zu erzeugen ist einiges an Vorüberlegung notwendig gewesen. Das Hauptproblem besteht darin den Roving bei jedem Durchgang zielgenau mit einem definierten Versatz zum Vorherigen Durchgang auf das Rohr aufzubringen. Hierfür ist es wichtig den genauen Winkel der Spindelposition zu kennen sowie die exakte Position der vorherigen Wicklungen. Insbesondere die Enden an denen umgekehrt wird und entsprechend beschleunigt bzw. abgebremst wird können dabei zu Problemen führen. Um unterschiedliche Ansätze auszuprobieren wurden unter anderem Simulationen mit Matlab durchgeführt.
+
+\subsection{Konstruieren in Siemens NX}
+    
+\section{Konzept}
+Der Grundaufbau der Wickelmaschine gleicht dem einer Drehbank. Es gibt eine Drehachse die den Wickelkörper rotiert, sowie einen Arm der auf einer Achse längs dem Wickelkörper bewegt wird. Dieser Arm führt den Roving und sorgt für eine exakte Platzierung, weshalb der Arm zusätzlich senkrecht zur Wickelachse bewegbar und rotierbar ist. Auf diese Weiße lässt sich der Abstand zwischen Wickelkörper und Arm varrieren sowie die Orientierung an den aktuellen Wickelwinkel anpassen. Zur Ansteuerung der Achsen kommen Schrittmotoren zum Einsatz, da diese zum einen vergleichsweise einfach und kostengünstig ansteuerbar sind und zum andern fertige Module mit Steppertreibern verfügbar sind. Über den oben beschriebenen drehbaren Arm wird der Roving zum Wickelkörper geführt, wobei dieser zuvor mit Epoxydharz getränkt werden muss, da dies je nach Gewebedicke nach dem Wickeln nur schlecht möglich ist. Außerdem ist durch die vorgesehene automatische Tränk- und Abstreifvorrichtung eine gleichmäßige Harzmenge garantiert. Durch eine variable Positionierung des Reitstocks sind Wickelkörper in beliebigen 
+
+\section{Mechanik}
+Der mechanische Aufbau der Wickelmaschine ist in Siemens NX modelliert. Manche Details wie Schrauben wurden dabei an irrelevanten Stellen weggelassen. Das Augenmerk liegt insbesondere auf den Teilen die in der Fräse selbst herzustellen sind, wie z.B. die Motorhalterungen, der Reitstock und die Verbindungen zu Teilen wie den Schrittmoten. Außerdem lässt sich in dem Maschinenmodell überprüfen, dass die Verbindungen und Lage der verschiedenen Teile zueinander stimmt. Im folgenden sollen die einzelnen Teile der Wickelmaschine näher betrachtet und erklärt werden.
+
+\subsection{Grundplatte}
+
+\subsection{Spindel}
+
+\subsection{Reitstock}
+
+\subsection{Wickelwagen}
+
+\subsection{Dreharm}
+
+\subsection{Tränkeinheit}
+
+
+
+\section{Software}
+Die verwendete Steuerung basiert auf [https://github.com/grbl/grbl grbl], welche bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen bzw. streamen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme, weshalb es nicht nötig ist hierfür ein neues zu entwickeln. Stattdessen geht es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt. Hierfür wurde in C++ eine Software geschrieben die Anhand der eingestellten Parameter G-Code für die Maschine erzeugt. Anschließend wird dieser mit dem G-Code streamer an die Maschine übertragen und ausgeführt.
 
 \end{document}
