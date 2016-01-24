@@ -2,16 +2,31 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
+\usepackage[babel,german=quotes]{csquotes}
+\usepackage{siunitx}
+\sisetup{locale = DE}
+\usepackage[pdftex]{graphicx}
+\usepackage{cleveref}
+\pdfcompresslevel=9
+\DeclareGraphicsExtensions{.png,.jpg,.pdf,.gif}
+
+\usepackage{epstopdf}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{pdfpages}
+\usepackage{setspace}
+\usepackage{glossaries}
+
+\usepackage{amsmath}
+
+
+
 \date{\today}
 \author{Philipp Hörauf, Toni Bartsch}
 \title{DIY: Die Carbonwickelmaschine}
-
-% Trennung von komischen Wörtern:
-
-
-% Bülder
-\usepackage{cleveref}
-\usepackage{graphicx}
 
 \begin{document}
 \maketitle
@@ -25,35 +40,36 @@ Ziel des Projektes ist eine Carbonwickelmaschine zu entwickeln um zylindrische u
 Die geplanten Spezifikationen für die Maschine sind:
 
 \begin{itemize}
-    \item Maximale Wickellänge 1200mm
-    \item Größter Durchmesser des Wickelkörpers 250mm
+    \item Maximale Wickellänge \SI{1200}{\milli\metre}
+    \item Größter Durchmesser des Wickelkörpers \SI{250}{\milli\metre}
     \item Verarbeitung von Carbon- und Glasfasern
-    \item Wickelvorgang PC-kontrolliert
+    \item Wickelvorgang PC-gesteuert
     \item Möglichst kostengünstiger Aufbau
     \item Konstruktion und Fertigung der Maschine aus Aluminium und Holz
-    \item 4 Achsen
+    \item Vier Achsen, davon zwei mal Rotation und zwei mal Linear
 \end{itemize}
 
 \subsection{Elektronik}
 \begin{itemize}
-    \item 4 Schrittmotoren
-    \item GRBL-Board
+    \item Vier Schrittmotoren
+    \item GRBL-Board 
     \item Netzteil
     \item Endschalter
 \end{itemize}
 
 
-\subsection{Programm}
+\subsection{Software}
 \begin{itemize}
-    \item G-Code Generator mit graphischem Userinterface anhand von einstellbaren Parametern
-    \item grbl Interface zum streamen des G-Codes und manuellem Verfahren
+    \item G-Code Generator mit graphischem Userinterface und einstellbaren Parametern
+    \item GRBL Interface zum streamen des G-Codes und manuellem Verfahren
+    \item GRBL auf einem Arduino, zur Ansteuerung der Schrittmotortreiber
 \end{itemize}
 
 \section{Grundlagen}
-Um die Funktionsweise und den Aufbau der Wickelmaschine besser verstehen zu können sollen als erstes einige wichtige Grundlagen zu den verwendeten Faserverbundwerkstoffen sowie dem Wickelvorgang erklärt werden. Die Wickelmaschine arbeitet grundsätzlich nach dem Prinzip, dass eine Form, z.B. ein Rohr mit einem Faserverbundwerkstoff umwickelt wird. Je nach Form und Vorbehandlung verbleibt die Form im fertigen Teil, oder wird wieder entfernt. Im folgenden sollen zuerst die Faserwerkstoffe näher betrachtet werden.
+Um die Funktionsweise und den Aufbau der Wickelmaschine besser verstehen zu können sollen als erstes einige wichtige Grundlagen zu den verwendeten Faserverbundwerkstoffen sowie dem Wickelvorgang erklärt werden. Die Wickelmaschine arbeitet grundsätzlich nach dem Prinzip, dass eine Form, z.B. ein Rohr mit einem Faserverbundwerkstoff umwickelt wird. Je nach Form und Vorbehandlung verbleibt die Form im fertigen Teil, oder wird wieder entfernt. Im Folgenden sollen zuerst die Faserwerkstoffe näher betrachtet werden.
 
 \subsection{Faserverbundwerkstoffe}
-Faserverbundwerkstoffe werden durch Zusammenfügen mehrere Werkstoffe hergestellt, zum einen aus einer formgebenden Matrix und zum anderen aus den verstärkenden Fasern. Als Matrix werden häufig Epoxy- oder Polyesterharze verwendet, als Faserwerkstoffe Glas-, Kohlenstoff- oder Aramidfaser. Eine wichtige Eigenschaft der Faserverbundwerkstoffe ist die richtungsabhängige Festigkeit. Allgemein gilt, dass die Stabilität der Fasern in Längsrichtung um ein vielfaches höher ist als bei Scherkräften. Die Faserrichtung ist somit bei der Konstruktion und Fertigung auf jeden Fall zu beachten.  Die folgende Übersicht soll einen Überblick über die wichtigsten Vor- und Nachteile der verschiedenen Fasern und Harze bieten und so die Entscheidungsfindung je nach Anwendungsfall erleichtern.
+Faserverbundwerkstoffe werden durch Zusammenfügen mehrerer Werkstoffe hergestellt, zum einen aus einer formgebenden Matrix und zum anderen aus den verstärkenden Fasern. Als Matrix werden häufig Epoxyd- oder Polyesterharze verwendet, als Faserwerkstoffe Glas-, Kohlenstoff- oder Aramidfasern. Eine wichtige Eigenschaft der Faserverbundwerkstoffe ist die richtungsabhängige Festigkeit. Allgemein gilt, dass die Stabilität der Fasern in Längsrichtung um ein vielfaches höher ist als bei Scherkräften. Die Faserrichtung ist somit bei Konstruktion und Fertigung auf jeden Fall zu beachten.  Die folgende Übersicht soll einen Überblick über die wichtigsten Vor- und Nachteile der verschiedenen Fasern und Harze bieten und so die Entscheidungsfindung je nach Anwendungsfall erleichtern.
 \begin{itemize}
 	\item Epoxydharz Vorteile
 	\begin{itemize}
@@ -65,8 +81,8 @@ Faserverbundwerkstoffe werden durch Zusammenfügen mehrere Werkstoffe hergestell
 	\end{itemize}
 	\item Epoxydharz Nachteile
 	\begin{itemize}
-		\item Relativ teuer
-		\item genaues Dosieren der Komponenten erforderlich
+		\item Hoher Preis
+		\item Genaues Dosieren der Komponenten erforderlich
 	\end{itemize}
 	\item Polyesterharz Vorteile	
 	\begin{itemize}
@@ -81,16 +97,16 @@ Faserverbundwerkstoffe werden durch Zusammenfügen mehrere Werkstoffe hergestell
 	\end{itemize}	 
 \end{itemize}
 
-Zusammenfassend kann man sagen, dass Epoxydharz gegenüber Polyesterharz die besseren technischen Eigenschaften aufweist, dafür aber deutlich teurer ist. Da hier aber die Witterungsbeständigkeit und die geringere Schrumpfung wichtig sind wird Epoxydharz verwendet. Durch die geringere Schrumpfung ist in diesem Fall insbesondere ein leichteres Entformen zu erwarten.
+Zusammenfassend ist zu sagen, dass Epoxydharz gegenüber Polyesterharz die besseren technischen Eigenschaften aufweist, dafür aber deutlich teurer ist. Da hier aber die Witterungsbeständigkeit und die geringere Schrumpfung wichtig sind, wird Epoxydharz verwendet. Durch die geringere Schrumpfung ist in diesem Fall insbesondere ein leichteres Entformen zu erwarten.
 
-Sowohl Epoxydharz- als auch Polyesterharzsysteme gibt es mit unterschiedlich Topf- bzw. Verarbeitungszeiten. Auch zu beachten ist, dass es Harze mit unterschiedlichen Anforderungen an die Bedingungen beim Härten gibt, insbesondere bzgl. Temperatur und Druck. Hier sollte ein passendes Produkt ausgewählt werden. In unserem Fall sind das Harze die bereits bei Raumtemperatur vollständig aushärten.
+Sowohl Epoxydharz- als auch Polyesterharzsysteme gibt es mit unterschiedlich Topf- bzw. Verarbeitungszeiten. Auch zu beachten ist, dass es Harze mit unterschiedlichen Anforderungen an die Bedingungen beim Härten gibt, insbesondere bzgl. Temperatur und Druck. Hier sollte ein passendes Produkt ausgewählt werden. In unserem Fall sind das Harze, die bereits bei Raumtemperatur vollständig aushärten.
 
-Im folgenden werden die häufig verwendete Kohle- und Glasfaser verglichen. Darüber hinaus gibt es noch weitere wie Aramid oder verschiedene Naturfasern.
+Im Folgenden werden die häufig verwendete Kohle- und Glasfaser verglichen. Darüber hinaus gibt es noch weitere wie Aramid oder verschiedene Naturfasern, die hier allerdings keine Anwendung finden und deswegen auch nicht weiter erwähnt werden.
 
 \begin{itemize}
 	\item Kohlefaser
 	\begin{itemize}
-		\item Hohe Zugfestigkeit
+		\item Sehr hohe Zugfestigkeit
 		\item Elektrisch leitend
 		\item Gute Tränkungseigenschaften
 		\item Vergleichsweise teuer
@@ -113,13 +129,61 @@ Die Entscheidung zwischen Kohlefaser und Glasfaser ist je nach Anwendung abzuwä
 
 
 
-\subsection{Wickelvorgang}
+\subsection{Die Mathematik des Wickelns}
+Um die gewünschten Wickelmuster zu erzeugen ist es wichtig, dieses zuerst mathematisch zu beschreiben. Dies geht am besten im Zylinderkoordinatensystem, wobei die Länge $r$ konstant bleibt und der Winkel $\varphi$ ständig inkrementiert wird, so lange sich der Wickelkörper dreht und damit den Roving aufwickelt. Der Schlitten verfährt dabei in z-Richtung. Dazu ist es nötig die Steigung $s(z)$ der Windung als Weg pro Umdrehung zu definieren. Es gibt für eine komplette Windung, also von $z = 0$ bis $z = z_{max}$ mehrere Zustände des Wickelns.\\
+\begin{itemize}
+	\item Anfangsstück: Bereich von $z = 0$ bis $z = z_{start}$
+	\item Mitte: Bereich von $z = z_{start}$ bis $z = z_{end}$
+	\item Endstück: Bereich von $z = z_{end}$ bis $z = z_{max}$
+\end{itemize}
+In den drei Abschnitten muss jeweils auf die Steigung eingegangen werden, diese ist nur in der Mitte konstant und lässt sich auch nur hier aus dem vorgegeben Wickelwinkel bestimmen, an den übrigen beiden Stücken ist die Steigung von $z$ abhängig. Das kommt daher, dass eine Windung bei $z = 0$ und $s = 0$ anfängt, da die Steigung beim Umkehren kurzzeitig Null wird und das Umkehren immer bei $z = 0$ und $z = z_{max}$ geschieht. Der Wickelvorgang selbst ist im Zylinderkoordinatensystem durch einen linear steigenden Winkel $\varphi$ und ein abschnittsweise definiertes $s(z)$ zu berechnen. Für den Wickelgang \enquote{vorwärts} ist $s = s(z)$ und rückwärts ist $s = -s(z)$. $s(z)$ muss unbedingt auf dem gesamten Bereich $z \in [0; z_{max}]$ stetig sein, da die Steigung beim Wickeln nicht springen kann, dazu müsste der Roving reißen oder umgesetzt werden, was schlicht physikalisch nicht geht.\\
+Komplizierter wird es nun, wenn die Längen von Anfangs- und Endstück nicht gleich sind, da dann die Steigung am Anfang einer anderen Abhängigkeit folgt, als am Ende, um die Stetigkeit von $s$ garantieren zu können. Im einfachsten Falle (Abhängigkeit rein linear) ist $s(z)$ eine lineare Funktion, die die sich aus den Punkten $s(z = 0)$, $s(z = z_{start}$ und $z = z_{max}$ berechnen lässt.\\
+\begin{equation}\label{steigungHin}
+	s(z)=
+	\begin{cases}
+		\frac{z}{z_{start}} \cdot s_{soll} & \text{für } z \leq z_{start}\\
+		s_{soll} & \text{für } z_{start} \leq z \leq z_{end}\\
+		\left( 1 - \frac{z}{z_{max}}\right) \cdot s_{soll} & \text{für } z \leq z_{max}
+	\end{cases}	
+\end{equation}\\
+Damit ist jetzt die Steigung für alle möglichen Fälle definiert, so lange sie sich nur linear verändern darf. Für eine anderweitige Abhängigkeit, Beispielsweise eine exponentielle zu- und Abnahme der Steigung ist die obrige Funktion entsprechend anzupassen. Für die ersten Tests wird darauf jedoch verzichtet und eine rein linaere Funktion gewählt.\\
+Eine weitere Schwierigkeit besteht darin, den Roving nach jedem Durchgang zielgenau und mit einem definierten Versatz zum vorherigen Durchgang auf das Rohr aufzubringen. Hierfür ist es wichtig die genaue Breite des Rovings und die gewünschte Mindestüberlappung einzelner Windungen zu kennen. Die Position der Spindeln muss natürlich auch weiterhin exakt sein, es dürfen sich vor allem keine Fehler über die Wickelgänge aufaddieren. Insbesondere die Enden an denen umgekehrt wird und entsprechend beschleunigt bzw. abgebremst werden muss, können dabei zu Problemen führen.\\
+Dafür wird jetzt die Windung vom Zylinder- in das kartesische Koordinatensystem umgerechnet, eine Windung setzt sich also aus einem Sinus- und einem Cosinusterm zusammen.\\
+\begin{eqnarray}\label{zylinder2kartesischHin}
+	x(\varphi) = \sin(\varphi + \varphi_0)\\
+	y(\varphi) = \cos(\varphi + \varphi_0)
+\end{eqnarray}\\
+Der Winkel $\varphi$ wird hierbei ausschließlich inkrementiert und pro Umdrehung wird $\varphi_0$ so erhöht, dass die Rovinglagen sich um einen vorher definierten Wert überlappen. Wichtig hierbei ist, dass $\varphi_0$ nur in ganzzahligen Teilen von \SI{360}{\degree} ansteigt, damit es keine subharmonischen Wellen auf dem Rohr gibt und so überall gleichviel Roving pro Fläche aufgewickelt ist, wenn eine komplette Lage (das sind dann $\frac{360}{\varphi_{0,min}}$ Wickelgänge) fertig ist.\\
+Erst nachdem eine komplette Lage voll ist, das heißt, $\varphi_0$ hat \SI{360}{\degree} erreicht, wird $\varphi_0 = 0$ gesetzt und das Rohr ist entweder fertig, sofern die Lagenanzahl auf $1$ steht, oder ein neuer Lagenzyklus beginnt.\\
+Um diese Berechnungen zu simulieren, wurde ein Programm in Matlab geschrieben und in 3D geplottet. Wichtig ist hierbei, dass die Formeln \eqref{zylinder2kartesischHin} hier nur für den Wickelvorgang von $z = 0$ ausgehend in positive Richtung angegeben sind. Um von $z = z_{max}$ wieder zurückzukommen, ist es nötig, die Formeln folgendermaßen umzuschreiben:\\
+\begin{eqnarray}\label{zylinder2kartesischRück}
+	x(\varphi) = \sin(-(\varphi + \varphi_0))\\
+	y(\varphi) = \cos(-(\varphi + \varphi_0))
+\end{eqnarray}\\
+Die Umschaltung zwischen den beiden Formelsätzen geschieht immer genau am Anfang bzw. Ende eines Wickelvorgangs. Dies kann nicht mehr in einer Funktion untergebracht werden, da dies eine nicht-eindeutige Abbildung ergeben würde, die keine Funktion mehr ist. Deswegen musste die Windung auch im Matlab auf zwei Funktionen in einem Plot aufgesplittet werden. \\
+Auch für die Code-Erzeugung spielt dies eine wichtige Rolle. Damit sich die Lagen Vorwärts und Rückwärts maximal überlappen, müssen sie jeweils um \SI{180}{\degree} zueinander verschoben sein. Das heißt, dass beim Wickeln der Endstücke jeweils in Summe eine halbe Umdrehung mehr gewickelt werden muss, als eigendlich durch die Formeln gegeben. Dadurch erweitert sich die Formel \eqref{steigungHin} um je einen Term im ersten und im dritten Abschnitt.\\
+In der G-Code-Erzeugungssoftware musste daher darauf geachtet werden, dass der Roving von jeder Wicklung zur nächstgelegenen eine Mindestüberlappung einhält und gleichzeitig die Anzahl der Windungen pro Lage ein Teiler von \SI{360}{\degree} bleibt. Es musste der Kompromiss eingegangen werden, dass das Programm im Zweifel eine leicht zu hohe Überlappung wählt, um die Teilerbedingung unbedingt einzuhalten.\\
+Es ist jedoch denkbar, diese Bedingung vom Benutzer abwählbar zu machen, wohlwissend, dass das Rohr dann nicht mehr komplett symmetrisch werden kann, weil die Wicklungen nicht mehr genau \SI{360}{\degree} ergeben und sich an einer Stelle eine minimale Verdickung bildet.\\
+Der nächste Schritt für den Wickelprozess ist die Berechnung der Winkel in Relation zu Steigung $s$ und dem zurückzulegenden Weg $z$, wobei besonderes Augenmerk auf die veränderliche Steigung an Anfang und Ende einer jeden Windung und den Winkelverschub $\varphi_0$ gelegt werden muss. Zuerst werden die allgemeinen Gleichungen für die Winkelberechnung dargelegt.\\
+Mit der Steigung in $\frac{\text{mm}}{\text{Umdrehung}}$ angegeben ergibt sich folgender Zusammenhang:\\
+\begin{equation}\label{SteigungMalWinkel}
+	z = s_{soll} \cdot \varphi \quad \iff \quad \varphi = \frac{z}{s_{soll}}
+\end{equation}\\
+So lange die Steigung $s = s_{soll}$ konstant ist, lässt sich \eqref{steigungHin} so umstellen, dass der Winkel $\varphi$ herauskommt und $z$ sowie $s_{soll}$ angegeben werden müssen. Also genau, wie man das für die Programmierung haben will. Hierbei ergeben sich allerdings keine Verläufe sondern feste Winkelwerte für die zurückzulegenden Strecken.
+\begin{equation}\label{GesamtwegeHinRück}
+	\varphi =
+	\begin{cases}
+		\varphi_0 + \SI{90}{\degree} + \frac{z_{start}}{s_{soll}} & \text{Weg von 0 bis $z_{start}$}\\ 
+		\frac{z_{end} - z_{start}}{s_{soll}} & \text{Weg von $z_{start}$ bis $z_{end}$}\\
+		\SI{90}{\degree} + \frac{z_{max} - z_{end}}{s_{soll}} & \text{Weg von $z_{end}$ bis $z_{max}$}
+	\end{cases}	
+\end{equation}\\
+Da hier ein linearer Anstieg der Steigung verwendet werden soll, werden die Strecken \enquote{START} und \enquote{ENDE} jeweils in $n$ Punkte zerlegt und innerhalb dieser sei die Steigung jeweils konstant. Weil G-Code sowieso nur endliche Genauigkeit hat, muss an irgend einem Punkt an den exakten Wert angenähert werden, was hier geschieht. Die beiden \SI{90}{\degree} extra kommen daher, dass am Ende eines hin-Wickelganges mit \SI{180}{\degree} Phasenversatz weitergewickelt werden muss und das $\varphi_0$ ist, wie schon erwähnt, für den Phasenversatz zwischen den einzelnen Wickelgängen.\\
+Die jeweiligen $n$ Punkte werden mit der Formel \eqref{steigungHin} auf jeweils $\frac{\varphi}{n}$ Drehwinkel berechnet und direkt als G-Code ausgegeben.
 
-\subsubsection{Mathematik hinter dem Wickelvorgang}
-Um die gewünschten Wickelmuster zu erzeugen ist einiges an Vorüberlegung notwendig gewesen. Das Hauptproblem besteht darin den Roving bei jedem Durchgang zielgenau mit einem definierten Versatz zum Vorherigen Durchgang auf das Rohr aufzubringen. Hierfür ist es wichtig den genauen Winkel der Spindelposition zu kennen sowie die exakte Position der vorherigen Wicklungen. Insbesondere die Enden an denen umgekehrt wird und entsprechend beschleunigt bzw. abgebremst wird können dabei zu Problemen führen. Um unterschiedliche Ansätze auszuprobieren wurden unter anderem Simulationen mit Matlab durchgeführt.
 
 \subsection{Konstruieren in Siemens NX}
-Der mechanische Teil der Wickelmaschine wurde in Siemens NX Konstruiert. Das endgültige Modell besteht aus mehreren Baugruppen die wiederum aus vielen einzelnen Modellen bestehen. Dabei existiert für jedes Einzelteil ein Modell das später mehrfach verwendet werden kann.  Mehrere Einzelteile die wiederum eine größere Einheit ergeben sind zu Baugruppen zusammengefasst. Auch diese lassen sich ähnlich wie die Modelle mehrfach verwenden. Auf diese Weise entsteht eine Hierarchische Struktur aus Baugruppen und Modellen die das Gesamtsystem ergeben. TODO Bilder von Modellen und Baugruppen einfügen
+Der mechanische Teil der Wickelmaschine wurde in Siemens NX Konstruiert. Das endgültige Modell besteht aus mehreren Baugruppen die wiederum aus vielen einzelnen Teilen bestehen. Dabei existiert für jedes Einzelteil ein Modell das später mehrfach verwendet werden kann.  Mehrere Einzelteile die wiederum eine größere Einheit ergeben, sind zu Baugruppen zusammengefasst. Auch diese lassen sich, ähnlich wie die Modelle, mehrfach verwenden. Auf diese Weise entsteht eine hierarchische Struktur aus Baugruppen und Modellen die das Gesamtsystem ergibt. TODO Bilder von Modellen und Baugruppen einfügen
 
 Während der Konstruktion können Variablen festgelegt werden die Bauteilübergreifend verwendbar sind. Die Ausrichtung innerhalb einer Baugruppe von den einzelnen Modelle zueinander wird mit sogenannten Zwangsbedingungen festgelegt. Eine Zwangsbedingungen kann z.B. festlegen, dass sich zwei Flächen berühren soll, oder Flächen bündig ausgerichtet werden sollen. 
 
