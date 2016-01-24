@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper, ngerman]{article}
+\documentclass[paper=A4,pagesize,DIV=18, 12pt,listof=totoc,bibliography=totoc,headings=optiontohead,open=any]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
@@ -7,8 +7,11 @@
 \sisetup{locale = DE}
 \usepackage[pdftex]{graphicx}
 \usepackage{cleveref}
-\pdfcompresslevel=9
+\pdfcompresslevel=0
 \DeclareGraphicsExtensions{.png,.jpg,.pdf,.gif}
+
+\usepackage[backend=bibtex]{biblatex}
+\bibliography{quellen.bib}
 
 \usepackage{epstopdf}
 \usepackage{float}
@@ -30,17 +33,23 @@
 
 \begin{document}
 \maketitle
+\thispagestyle{empty}
 \vspace*{15mm}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{NX_Screenshots/gesamt3.png}
 \end{figure}
 
+\pagenumbering{Roman}
+
 \newpage
 \tableofcontents
 \newpage
+
+% ab hier normale Zeilennummern.
+\pagenumbering{arabic}
 \section{Einleitung}
-Ziel des Projektes ist eine Carbonwickelmaschine zu entwickeln um zylindrische und konische Wickelkörper mit unterschiedlichen Rovings bewickeln zu können. Auf diese Weise soll es möglich sein extrem leichte, verschwindungssteife und korrosionsbeständig Rohre herzustellen die quasi immun gegen Wärmeausdehnung sind. Für diesen Zweck gibt es zwar bereits Maschinen, die aber entweder für deutlich größere Teile ausgelegt sind, oder die sehr teuer bzw. nicht mehr verfügbar sind. Beispiele für solche Maschinen sind: TODO
+Ziel des Projektes ist eine Carbonwickelmaschine zu entwickeln um zylindrische und konische Wickelkörper mit unterschiedlichen Rovings bewickeln zu können. Auf diese Weise soll es möglich sein extrem leichte, verschwindungssteife und korrosionsbeständig Rohre herzustellen die quasi immun gegen Wärmeausdehnung sind. Für diesen Zweck gibt es zwar bereits Maschinen, die aber entweder für deutlich größere Teile ausgelegt sind, oder die sehr teuer bzw. nicht als Bauplan kostenlos verfügbar sind.
 
 \section{Spezifikationen und Überblick}
 Die geplanten Spezifikationen für die Maschine sind:
@@ -192,7 +201,7 @@ Die jeweiligen $n$ Punkte werden mit der Formel \eqref{steigungHin} auf jeweils 
 Der mechanische Teil der Wickelmaschine wurde in Siemens NX Konstruiert. Das endgültige Modell besteht aus mehreren Baugruppen die wiederum aus vielen einzelnen Teilen bestehen. Dabei existiert für jedes Einzelteil ein Modell das später mehrfach verwendet werden kann.  Mehrere Einzelteile die wiederum eine größere Einheit ergeben, sind zu Baugruppen zusammengefasst. Auch diese lassen sich, ähnlich wie die Modelle, mehrfach verwenden. Auf diese Weise entsteht wie in Abbildung \ref{fig:baugruppenstruktur} eine hierarchische Struktur aus Baugruppen und Modellen die das Gesamtsystem ergibt. 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\textwidth]{NX_Screenshots/baugruppen.PNG}
+	\includegraphics[width=0.4\textwidth]{NX_Screenshots/baugruppen.png}
 	\caption{Übersicht über die Baugruppenstruktur} 
 	\label{fig:baugruppenstruktur}
 \end{figure}
@@ -203,33 +212,34 @@ Während der Konstruktion können Variablen festgelegt werden die Bauteilübergr
 Ein etwas spezielleres Feature das man nutzen kann sind sogenannte Wavelinks. Dabei können beispielsweise Konturen oder Kreise von einem Modell in ein anderes verknüpft werden und sind dort weiterverwendbar. Praktisch ist dies z.B. bei Bohrungslöcher für Schrauben, wobei die Position der Bohrungslöcher zueinander von einem anderen Modell übernommen wurde. Ist diese Verknüpfung assoziativ werden auch künftige Änderungen an dem Ursprungsmodell im verknüpften Modell übernommen.
     
 \section{Konzept}
-Der Grundaufbau der Wickelmaschine gleicht dem einer Drehbank. Es gibt eine Drehachse die den Wickelkörper rotiert, sowie einen Arm der auf einer Achse längs dem Wickelkörper bewegt wird. Dieser Arm führt den Roving und sorgt für eine exakte Platzierung, weshalb der Arm zusätzlich senkrecht zur Wickelachse bewegbar und rotierbar ist. Auf diese Weiße lässt sich der Abstand zwischen Wickelkörper und Arm varrieren sowie die Orientierung an den aktuellen Wickelwinkel anpassen. Zur Ansteuerung der Achsen kommen Schrittmotoren zum Einsatz, da diese zum einen vergleichsweise einfach und kostengünstig ansteuerbar sind und zum andern fertige Module mit Steppertreibern verfügbar sind. Über den oben beschriebenen drehbaren Arm wird der Roving zum Wickelkörper geführt, wobei dieser zuvor mit Epoxydharz getränkt werden muss, da dies je nach Gewebedicke nach dem Wickeln nur schlecht möglich ist. Außerdem ist durch die vorgesehene automatische Tränk- und Abstreifvorrichtung eine gleichmäßige Harzmenge garantiert. Durch eine variable Positionierung des Reitstocks sind Wickelkörper in beliebigen 
+Der Grundaufbau der Wickelmaschine gleicht dem einer Drehbank. Es gibt eine Drehachse die den Wickelkörper rotiert, sowie einen Arm der auf einer Achse längs dem Wickelkörper bewegt wird. Dieser Arm führt den Roving und sorgt für eine exakte Platzierung, weshalb der Arm zusätzlich senkrecht zur Wickelachse bewegbar und rotierbar ist. Auf diese Weiße lässt sich der Abstand zwischen Wickelkörper und Arm varrieren sowie die Orientierung an den aktuellen Wickelwinkel anpassen. Zur Ansteuerung der Achsen kommen Schrittmotoren zum Einsatz, da diese zum einen vergleichsweise einfach und kostengünstig ansteuerbar sind und zum andern fertige Module mit Steppertreibern verfügbar sind. Über den oben beschriebenen drehbaren Arm wird der Roving zum Wickelkörper geführt, wobei dieser zuvor mit Epoxydharz getränkt werden muss, da dies je nach Gewebedicke nach dem Wickeln nur schlecht möglich ist. Außerdem ist durch die vorgesehene automatische Tränk- und Abstreifvorrichtung eine gleichmäßige Harzmenge garantiert. Durch eine variable Positionierung des Reitstocks sind Wickelkörper in fast beliebigen Längen und Durchmessern, bis zu \SI{1200}{\milli\metre} Länge und unter \SI{250}{\milli\metre} Durchmesser, möglich.
 
 \section{Mechanik}
 Der mechanische Aufbau der Wickelmaschine ist in Siemens NX modelliert. Manche Details wie Schrauben wurden dabei an irrelevanten Stellen weggelassen. Das Augenmerk liegt insbesondere auf den Teilen die in der Fräse selbst herzustellen sind, wie z.B. die Motorhalterungen, der Reitstock und die Verbindungen zu Teilen wie den Schrittmoten. Außerdem lässt sich in dem Maschinenmodell überprüfen, dass die Verbindungen und Lage der verschiedenen Teile zueinander stimmt. Im folgenden sollen die einzelnen Teile der Wickelmaschine näher betrachtet und erklärt werden.
 
 \subsection{Grundplatte}
-Die Grundplatte dient als Aufnahme für die weiteren Teile wie Spindel, Reitstock, Linearführunen usw. Aus Kosten- und Gewichtsgründen wird diese aus Holz hergestellt, wobei die Festigkeit aufgrund der geringen mechanischen Belastung ausreichend ist.
+Die Grundplatte dient als Aufnahme für die weiteren Teile wie Spindel, Reitstock, Linearführunen usw. Aus Kosten- und Gewichtsgründen wird diese aus Multiplexplatte hergestellt, weil die Festigkeit für die zu erwartende geringe mechanische Belastung ausreichend ist. Auf Ihr müssen Spindelhalter, Reitstock und die lange Linearführung montiert werden. Der Reitstock ist dazu noch verschiebbar, um die Maschine auf verschieden lange Wickelkörper anpassen zu können.
 
 \subsection{Spindel}
-Die Spindel nimmt die eine Seite des Wickelkörpers auf und treibt diesen mithilfe eines Schrittmotors an. Die Aufnahme für den Wickelkörper ist Kegelförmig um unterschiedlich Große Rohrdurchmesser von Innen Spannen zu können. Für spezielle Wickelkörper ist diese austauschbar.
+Die Spindel nimmt eine Seite des Wickelkörpers auf und treibt diesen mithilfe eines Schrittmotors an. Die Aufnahme für den Wickelkörper ist Kegelförmig um unterschiedlich große Rohrdurchmesser von innen Spannen zu können. Die Kraftübertragung geschieht über Reibung bei bei einer Drehbank, in der Material zwischen Spitzen gespannt ist. Für spezielle Wickelkörper ist der Kegel zusätzlich noch austauschbar. In der Achsenbeschreibung hat diese Achse den Buchstaben C, also parallel zur linearen Achse Z gelegen.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{NX_Screenshots/spindel.png}
-	\caption{Spindel inkl. Halterung und Aufnahmekegel} 
+	\includegraphics[width=0.8\textwidth]{NX_Screenshots/spindel.png}
+	\caption{angetriebene Spindel inkl. Halterung und Aufnahmekegel} 
 	\label{fig:spindel}
 \end{figure}
 
 \subsection{Reitstock}
-Am Reitstock wird der Wickelkörper gegen gelagert, um unterschiedlich lange Wickelkörper verwenden zu können ist dieser frei positionierbar. Der Aufbau ist ähnlich dem von der Spindel mit Ausnahme des fehlenden Antriebs. Zusätzlich ist eine Feder vorgesehen die den Kegel auf den Wickelkörper drückt. Dies ermöglicht ein einfacheres wechseln des Wickelkörpers.  
+Am Reitstock wird der Wickelkörper leicht drehbar gegengelagert. Um unterschiedlich lange Wickelkörper verwenden zu können ist dieser in Z-Richtung stufenlos verschiebbar. Der Aufbau ist ähnlich dem der Spindel mit Ausnahme des fehlenden Antriebs. Zusätzlich ist eine Feder vorgesehen die den Kegel auf den Wickelkörper drückt. Dies ermöglicht ein einfacheres Wechseln des Wickelkörpers, ohne den Reitstock selbst verschieben zu müssen.
 
 
 \subsection{Wickelwagen}
-Der Wickelwagen besteht aus dem Dreharm, usw...
+Der Wickelwagen lagert auf einer langen Linearführung und führt den eigendlichen Wickelvorgang aus. Da darauf später nicht wenig Gewicht lagert, muss er robust ausgeführt und gegen Verkippen gesichert sein. Wir haben uns entschieden, eine Linearführung mit aufgesetztem Wagen zu kaufen und nicht auf sonst im Hobbybereich anzutreffende unterstützte Wellen oder Schubladenschienen zurückzugreifen.\\
+Der Wagen führt demnach die Bewegung in der Achse Z aus und trägt eine weitere, kleine Linearführung, die dann die Bewegung in X-Richtung ermöglicht. Damit entspricht der Wagen dem Planschlitten einer Drehbank.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{NX_Screenshots/wagen.png}
+	\includegraphics[width=0.8\textwidth]{NX_Screenshots/wagen.png}
 	\caption{Wagen der Linearführung} 
 	\label{fig:wagen}
 \end{figure}
@@ -238,11 +248,12 @@ Der Wickelwagen besteht aus dem Dreharm, usw...
 \subsection{Dreharm}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{NX_Screenshots/arm_vorne.png}
+	\includegraphics[width=0.8\textwidth]{NX_Screenshots/arm_vorne.png}
 	\caption{Dreharm mit Rovingführung} 
 	\label{fig:dreharm}
 \end{figure}
-
+Hier sieht man die Adapterplatte, die auf dem Wickelwagen (unten in der Mitte) befestigt wird. Das senkrechte Blechstück trägt dann einen weiteren Schrittmotor und den Rovingdurchlass mit der Dreheinheit. Diese sorgt dafür, dass auch bei komplexeren Wickelgeometrien, wie beispielsweise Flaschen oder unterschiedlich dicken Gegenständen, der Roving stets in Normalenrichtung auf das Werkstück geführt werden kann. Auf einer CNC-Maschine wäre dies die zur X-Achse parallele Drehachse, die dann mit dem Buchstaben A bezeichnet wird. Da der Roving zum Zeitpunkt des Wickelns schon mit Harz getränkt ist, müssen alle Teile, die mit dem Roving in Berührung kommen, aus Teflon hergestellt werden. Hier trifft das auf die kleine, leicht zylindrische Rolle vorn am Drehaufsatz zu, diese wird durch zwei Schrauben gehalten und ist so leicht ausbaubar oder sogar austauschbar.\\
+Der Antrieb der X-Achse ist hier auch ausgeblendet, um die Drehvorrichtung der Achse A besser zeigen zu können.
 
 
 \subsection{Tränkeinheit}
@@ -260,6 +271,9 @@ Der Wickelwagen besteht aus dem Dreharm, usw...
 
 
 \subsection{grbl Interface}
-Die verwendete Steuerung basiert auf [https://github.com/grbl/grbl grbl], welche bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen bzw. streamen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme, weshalb es nicht nötig ist hierfür ein neues zu entwickeln. Stattdessen geht es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt. Hierfür wurde in C++ eine Software geschrieben die Anhand der eingestellten Parameter G-Code für die Maschine erzeugt. Anschließend wird dieser mit dem G-Code streamer an die Maschine übertragen und ausgeführt.
+Die verwendete Steuerung basiert auf grbl\cite{grbl}, welche bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen bzw. streamen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme, weshalb es nicht nötig ist hierfür ein neues zu entwickeln. Stattdessen geht es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt. Hierfür wurde in C++ eine Software geschrieben die Anhand der eingestellten Parameter G-Code für die Maschine erzeugt. Anschließend wird dieser mit dem G-Code streamer an die Maschine übertragen und ausgeführt.\\
+
+\newpage
+\printbibliography
 
 \end{document}

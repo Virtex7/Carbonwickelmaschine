@@ -18,3 +18,8 @@
 *.out
 *.nav
 *.snm
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+
