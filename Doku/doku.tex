@@ -84,7 +84,8 @@ Die geplanten Spezifikationen für die Maschine sind:
 Um die Funktionsweise und den Aufbau der Wickelmaschine besser verstehen zu können sollen als erstes einige wichtige Grundlagen zu den verwendeten Faserverbundwerkstoffen sowie dem Wickelvorgang erklärt werden. Die Wickelmaschine arbeitet grundsätzlich nach dem Prinzip, dass eine Form, z.B. ein Rohr mit einem Faserverbundwerkstoff umwickelt wird. Je nach Form und Vorbehandlung verbleibt die Form im fertigen Teil, oder wird wieder entfernt. Im Folgenden sollen zuerst die Faserwerkstoffe näher betrachtet werden.
 
 \subsection{Faserverbundwerkstoffe}
-Faserverbundwerkstoffe werden durch Zusammenfügen mehrerer Werkstoffe hergestellt, zum einen aus einer formgebenden Matrix und zum anderen aus den verstärkenden Fasern. Als Matrix werden häufig Epoxyd- oder Polyesterharze verwendet, als Faserwerkstoffe Glas-, Kohlenstoff- oder Aramidfasern. Eine wichtige Eigenschaft der Faserverbundwerkstoffe ist die richtungsabhängige Festigkeit. Allgemein gilt, dass die Stabilität der Fasern in Längsrichtung um ein vielfaches höher ist als bei Scherkräften. Die Faserrichtung ist somit bei Konstruktion und Fertigung auf jeden Fall zu beachten.  Die folgende Übersicht soll einen Überblick über die wichtigsten Vor- und Nachteile der verschiedenen Fasern und Harze bieten und so die Entscheidungsfindung je nach Anwendungsfall erleichtern.
+Faserverbundwerkstoffe werden durch Zusammenfügen mehrerer Werkstoffe hergestellt, zum einen aus einer formgebenden Matrix und zum anderen aus den verstärkenden Fasern. Als Matrix werden häufig Epoxyd- oder Polyesterharze verwendet, als Faserwerkstoffe Glas-, Kohlenstoff- oder Aramidfasern. Eine wichtige Eigenschaft der Faserverbundwerkstoffe ist die richtungsabhängige Festigkeit. Allgemein gilt, dass die Stabilität der Fasern in Längsrichtung um ein vielfaches höher ist als bei Scherkräften. Die Faserrichtung ist somit bei Konstruktion und Fertigung auf jeden Fall zu beachten.  Die folgende Übersicht soll einen Überblick über die wichtigsten Vor- und Nachteile der verschiedenen Fasern und Harze bieten und so die Entscheidungsfindung je nach Anwendungsfall erleichtern. \cite{r_g_wiki}
+
 \begin{itemize}
 	\item Epoxydharz Vorteile
 	\begin{itemize}
@@ -136,15 +137,15 @@ Im Folgenden werden die häufig verwendete Kohle- und Glasfaser verglichen. Dar�
 	\end{itemize}
 \end{itemize}
 
-Die Entscheidung zwischen Kohlefaser und Glasfaser ist je nach Anwendung abzuwägen. Spielt das Gewicht eine eher geringe Rolle ist tendenziell Glasfaser aufgrund des günstigeren Preises zu bevorzugen. \cite{r_g_handbuch}
-\cite{r_g_wiki}
-
+Die Entscheidung zwischen Kohlefaser und Glasfaser ist je nach Anwendung abzuwägen. Spielt das Gewicht eine eher geringe Rolle ist tendenziell Glasfaser aufgrund des günstigeren Preises zu bevorzugen. 
+\cite{r_g_handbuch}
 %Quelle R&G_Handbuch.pdf
 %Quelle: http://www.r-g.de/wiki/Was_sind_Faserverbundwerkstoffe%3F
 
 
 
 \subsection{Die Mathematik des Wickelns}
+\label{mathematik}
 Um die gewünschten Wickelmuster zu erzeugen ist es wichtig, dieses zuerst mathematisch zu beschreiben. Dies geht am besten im Zylinderkoordinatensystem, wobei die Länge $r$ konstant bleibt und der Winkel $\varphi$ ständig inkrementiert wird, so lange sich der Wickelkörper dreht und damit den Roving aufwickelt. Der Schlitten verfährt dabei in z-Richtung. Dazu ist es nötig die Steigung $s(z)$ der Windung als Weg pro Umdrehung zu definieren. Es gibt für eine komplette Windung, also von $z = 0$ bis $z = z_{max}$ mehrere Zustände des Wickelns.\\
 \begin{itemize}
 	\item Anfangsstück: Bereich von $z = 0$ bis $z = z_{start}$
@@ -257,11 +258,15 @@ Der Antrieb der X-Achse ist hier auch ausgeblendet, um die Drehvorrichtung der A
 
 
 \subsection{Tränkeinheit}
+Bevor das Roving auf den Wickelkörper aufgebracht werden kann muss es zuerst mit Harz getränkt werden. Zu diesem Zweck ist ein Gefäß vorgesehen, das auf dem Wagen in Z und X Richtung mitfährt und mit einer ausreichenden Menge an Harz gefüllt ist. Dabei wurde darauf geachtet, dass möglichst wenig Harz in dem Behälter verbleibt und verschwendet wird. Im wesentlichen läuft das Roving in der Tränkeinheit über zwei Umlenkungen und einen Abstreifer an dem das überschüssige Harz entfernt und dem Behälter wieder zugeführt wird. Anschließend läuft das Roving nur noch durch den Dreharm und dessen Umlenkrolle aus Teflon um die Anzahl der zu reinigenden Teile gering zu halten.
 
 
 
 \section{Software}
+Die verwendete Software besteht aus zwei Teilen die im folgenden näher beschrieben werden. Zum einen einem Programm zur G-Code Erzeugung, zum anderen einem Interface zur Maschinensteuerung.
 \subsection{G-Code Erzeugung}
+\label{software}
+Die Steuerung der Wickelmaschine erfolgt über normale G-Code Kommandos wie sie auch bei vielen anderen CNC-Maschinen verwendet werden. Für Fräs- und Drehmaschinen gibt es zur Erzeugung von G-Code anhand eine CAD Modells bereits viele Programme, für Wickelmaschinen leider nur sehr wenige und noch dazu sehr teure. Deshalb wurde auf Basis der unter \ref{mathematik} beschriebenen mathematischen Modells eine PC-Software in C++ entwickelt die  Anhand der eingestellten Parameter passenden G-Code erzeugt. In Abbildung \ref{fig:g-code} ist das graphische Userinterface zu sehen. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{bilder/carbowickler_software.png}
@@ -271,7 +276,7 @@ Der Antrieb der X-Achse ist hier auch ausgeblendet, um die Drehvorrichtung der A
 
 
 \subsection{grbl Interface}
-Die verwendete Steuerung basiert auf grbl\cite{grbl}, welche bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen bzw. streamen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme, weshalb es nicht nötig ist hierfür ein neues zu entwickeln. Stattdessen geht es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt. Hierfür wurde in C++ eine Software geschrieben die Anhand der eingestellten Parameter G-Code für die Maschine erzeugt. Anschließend wird dieser mit dem G-Code streamer an die Maschine übertragen und ausgeführt.\\
+Die verwendete Steuerung basiert auf grbl\cite{grbl}, welche bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen bzw. streamen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme die eingesetzt werden können, weshalb es nicht nötig ist hierfür ein neues zu entwickeln. Stattdessen ging es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt, siehe hierzu \ref{software}.
 
 \newpage
 \printbibliography
