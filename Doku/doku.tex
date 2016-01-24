@@ -30,6 +30,12 @@
 
 \begin{document}
 \maketitle
+\vspace*{15mm}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{NX_Screenshots/gesamt3.png}
+\end{figure}
+
 \newpage
 \tableofcontents
 \newpage
@@ -183,7 +189,14 @@ Die jeweiligen $n$ Punkte werden mit der Formel \eqref{steigungHin} auf jeweils 
 
 
 \subsection{Konstruieren in Siemens NX}
-Der mechanische Teil der Wickelmaschine wurde in Siemens NX Konstruiert. Das endgültige Modell besteht aus mehreren Baugruppen die wiederum aus vielen einzelnen Teilen bestehen. Dabei existiert für jedes Einzelteil ein Modell das später mehrfach verwendet werden kann.  Mehrere Einzelteile die wiederum eine größere Einheit ergeben, sind zu Baugruppen zusammengefasst. Auch diese lassen sich, ähnlich wie die Modelle, mehrfach verwenden. Auf diese Weise entsteht eine hierarchische Struktur aus Baugruppen und Modellen die das Gesamtsystem ergibt. TODO Bilder von Modellen und Baugruppen einfügen
+Der mechanische Teil der Wickelmaschine wurde in Siemens NX Konstruiert. Das endgültige Modell besteht aus mehreren Baugruppen die wiederum aus vielen einzelnen Teilen bestehen. Dabei existiert für jedes Einzelteil ein Modell das später mehrfach verwendet werden kann.  Mehrere Einzelteile die wiederum eine größere Einheit ergeben, sind zu Baugruppen zusammengefasst. Auch diese lassen sich, ähnlich wie die Modelle, mehrfach verwenden. Auf diese Weise entsteht wie in Abbildung \ref{fig:baugruppenstruktur} eine hierarchische Struktur aus Baugruppen und Modellen die das Gesamtsystem ergibt. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{NX_Screenshots/baugruppen.PNG}
+	\caption{Übersicht über die Baugruppenstruktur} 
+	\label{fig:baugruppenstruktur}
+\end{figure}
+
 
 Während der Konstruktion können Variablen festgelegt werden die Bauteilübergreifend verwendbar sind. Die Ausrichtung innerhalb einer Baugruppe von den einzelnen Modelle zueinander wird mit sogenannten Zwangsbedingungen festgelegt. Eine Zwangsbedingungen kann z.B. festlegen, dass sich zwei Flächen berühren soll, oder Flächen bündig ausgerichtet werden sollen. 
 
@@ -201,6 +214,12 @@ Die Grundplatte dient als Aufnahme für die weiteren Teile wie Spindel, Reitstoc
 \subsection{Spindel}
 Die Spindel nimmt die eine Seite des Wickelkörpers auf und treibt diesen mithilfe eines Schrittmotors an. Die Aufnahme für den Wickelkörper ist Kegelförmig um unterschiedlich Große Rohrdurchmesser von Innen Spannen zu können. Für spezielle Wickelkörper ist diese austauschbar.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{NX_Screenshots/spindel.png}
+	\caption{Spindel inkl. Halterung und Aufnahmekegel} 
+	\label{fig:spindel}
+\end{figure}
 
 \subsection{Reitstock}
 Am Reitstock wird der Wickelkörper gegen gelagert, um unterschiedlich lange Wickelkörper verwenden zu können ist dieser frei positionierbar. Der Aufbau ist ähnlich dem von der Spindel mit Ausnahme des fehlenden Antriebs. Zusätzlich ist eine Feder vorgesehen die den Kegel auf den Wickelkörper drückt. Dies ermöglicht ein einfacheres wechseln des Wickelkörpers.  
@@ -208,14 +227,39 @@ Am Reitstock wird der Wickelkörper gegen gelagert, um unterschiedlich lange Wic
 
 \subsection{Wickelwagen}
 Der Wickelwagen besteht aus dem Dreharm, usw...
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{NX_Screenshots/wagen.png}
+	\caption{Wagen der Linearführung} 
+	\label{fig:wagen}
+\end{figure}
+
 
 \subsection{Dreharm}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{NX_Screenshots/arm_vorne.png}
+	\caption{Dreharm mit Rovingführung} 
+	\label{fig:dreharm}
+\end{figure}
+
+
 
 \subsection{Tränkeinheit}
 
 
 
 \section{Software}
+\subsection{G-Code Erzeugung}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{bilder/carbowickler_software.png}
+	\caption{Programm zur G-Code Erzeugung} 
+	\label{fig:g-code}
+\end{figure}
+
+
+\subsection{grbl Interface}
 Die verwendete Steuerung basiert auf [https://github.com/grbl/grbl grbl], welche bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen bzw. streamen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme, weshalb es nicht nötig ist hierfür ein neues zu entwickeln. Stattdessen geht es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt. Hierfür wurde in C++ eine Software geschrieben die Anhand der eingestellten Parameter G-Code für die Maschine erzeugt. Anschließend wird dieser mit dem G-Code streamer an die Maschine übertragen und ausgeführt.
 
 \end{document}
