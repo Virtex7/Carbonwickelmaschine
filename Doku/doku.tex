@@ -138,7 +138,14 @@ Im Folgenden werden die häufig verwendete Kohle- und Glasfaser verglichen. Dar�
 \end{itemize}
 
 Die Entscheidung zwischen Kohlefaser und Glasfaser ist je nach Anwendung abzuwägen. Spielt das Gewicht eine eher geringe Rolle ist tendenziell Glasfaser aufgrund des günstigeren Preises zu bevorzugen. 
-\cite{r_g_handbuch}
+In Abbildung \ref{fig:roving} ist einer der verwendeten Kohlefaserrovings abgebildet. \cite{r_g_handbuch}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{bilder/IMG_2629.JPG}
+	\caption{Kohlefaserroving} 
+	\label{fig:roving}
+\end{figure}
+
 %Quelle R&G_Handbuch.pdf
 %Quelle: http://www.r-g.de/wiki/Was_sind_Faserverbundwerkstoffe%3F
 
@@ -237,12 +244,20 @@ Am Reitstock wird der Wickelkörper leicht drehbar gegengelagert. Um unterschied
 
 \subsection{Wickelwagen}
 Der Wickelwagen lagert auf einer langen Linearführung und führt den eigendlichen Wickelvorgang aus. Da darauf später nicht wenig Gewicht lagert, muss er robust ausgeführt und gegen Verkippen gesichert sein. Wir haben uns entschieden, eine Linearführung mit aufgesetztem Wagen zu kaufen und nicht auf sonst im Hobbybereich anzutreffende unterstützte Wellen oder Schubladenschienen zurückzugreifen.\\
-Der Wagen führt demnach die Bewegung in der Achse Z aus und trägt eine weitere, kleine Linearführung, die dann die Bewegung in X-Richtung ermöglicht. Damit entspricht der Wagen dem Planschlitten einer Drehbank.
+Der Wagen führt demnach die Bewegung in der Achse Z aus und trägt eine weitere, kleine Linearführung, die dann die Bewegung in X-Richtung ermöglicht. Damit entspricht der Wagen dem Planschlitten einer Drehbank. Die folgenden Abbildungen zeigen die verwendeten Linearführungen.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{bilder/IMG_2616.JPG}
+	\caption{Linearführungen im demontierten Zustand} 
+	\label{fig:wagen}
+\end{figure}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{NX_Screenshots/wagen.png}
-	\caption{Wagen der Linearführung} 
-	\label{fig:wagen}
+	\caption{Wagen der Linearführung in NX} 
+	\label{fig:wagen_foto}
 \end{figure}
 
 
@@ -259,6 +274,12 @@ Der Antrieb der X-Achse ist hier auch ausgeblendet, um die Drehvorrichtung der A
 
 \subsection{Tränkeinheit}
 Bevor das Roving auf den Wickelkörper aufgebracht werden kann muss es zuerst mit Harz getränkt werden. Zu diesem Zweck ist ein Gefäß vorgesehen, das auf dem Wagen in Z und X Richtung mitfährt und mit einer ausreichenden Menge an Harz gefüllt ist. Dabei wurde darauf geachtet, dass möglichst wenig Harz in dem Behälter verbleibt und verschwendet wird. Im wesentlichen läuft das Roving in der Tränkeinheit über zwei Umlenkungen und einen Abstreifer an dem das überschüssige Harz entfernt und dem Behälter wieder zugeführt wird. Anschließend läuft das Roving nur noch durch den Dreharm und dessen Umlenkrolle aus Teflon um die Anzahl der zu reinigenden Teile gering zu halten.
+\begin{figure}[H]
+	\centering
+	\includegraphics[angle=270, width=1\textwidth]{bilder/skizze.jpg}
+	\caption{Skizze der Tränkeinrichtung} 
+	\label{fig:123}
+\end{figure}
 
 
 
@@ -276,7 +297,13 @@ Die Steuerung der Wickelmaschine erfolgt über normale G-Code Kommandos wie sie 
 
 
 \subsection{grbl Interface}
-Die verwendete Steuerung basiert auf grbl\cite{grbl}, welche bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen bzw. streamen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme die eingesetzt werden können, weshalb es nicht nötig ist hierfür ein neues zu entwickeln. Stattdessen ging es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt, siehe hierzu \ref{software}.
+Die verwendete Steuerung basiert auf grbl\cite{grbl}, welche bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen bzw. streamen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme die eingesetzt werden können, weshalb es nicht nötig ist hierfür ein neues zu entwickeln. Stattdessen ging es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt, siehe hierzu \ref{software}. Die Hardware der Steuerung ist in \ref{fig:grbl_board} zu sehen.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{bilder/IMG_2608.JPG}
+	\caption{grbl-board mit stepsticks} 
+	\label{fig:grbl_board}
+\end{figure}
 
 \newpage
 \printbibliography
