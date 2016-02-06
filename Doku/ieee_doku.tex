@@ -50,6 +50,8 @@
 \usepackage{siunitx}
 \sisetup{locale = DE}
 \usepackage{amsmath}
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsExtensions{.png,.jpg,.pdf,.gif}
 
 
 %
@@ -473,7 +475,7 @@ Wickelmaschine, Carbon, Kohlefaser, Glasfaser, Faserverbundwerkstoffe, Rohr
 \hfill Februar 6, 2016
 
 \section{Spezifikationen und Überblick}
-Die geplanten Spezifikationen für die Maschine sind:
+Die Spezifikationen der Maschine sind:
 
 \begin{itemize}
     \item Maximale Wickellänge \SI{1200}{\milli\metre}
@@ -560,12 +562,12 @@ Im Folgenden werden die häufig verwendeten Kohle- und Glasfasern verglichen. Da
 
 Die Entscheidung zwischen Kohlefaser und Glasfaser ist je nach Anwendung abzuwägen. Spielt das Gewicht eine eher geringe Rolle ist tendenziell Glasfaser aufgrund des günstigeren Preises zu bevorzugen. 
 In Abbildung \ref{fig:roving} ist einer der verwendeten Kohlefaserrovings abgebildet. \cite{r_g_handbuch}
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{bilder/IMG_2629.JPG}
-%	\caption{Kohlefaserroving} 
-%	\label{fig:roving}
-%\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.45\textwidth]{bilder/IMG_2629.JPG}
+	\caption{Kohlefaserroving} 
+	\label{fig:roving}
+\end{figure}
 
 %Quelle R&G_Handbuch.pdf
 %Quelle: http://www.r-g.de/wiki/Was_sind_Faserverbundwerkstoffe%3F
@@ -587,7 +589,7 @@ Komplizierter wird es nun, wenn die Längen von Anfangs- und Endstück nicht gle
 		\left( 1 - \frac{z}{z_{max}}\right) \cdot s_{soll} & \text{für } z \leq z_{max}
 	\end{cases}	
 \end{equation}\\
-Damit ist jetzt die Steigung für alle möglichen Fälle definiert, so lange sie sich nur linear verändern darf. Für eine anderweitige Abhängigkeit, Beispielsweise eine exponentielle zu- und Abnahme der Steigung ist die obrige Funktion entsprechend anzupassen. Für die ersten Tests wird darauf jedoch verzichtet und eine rein linaere Funktion gewählt.\\
+Damit ist jetzt die Steigung für alle möglichen Fälle definiert, so lange sie sich nur linear verändern darf. Für eine anderweitige Abhängigkeit, Beispielsweise eine exponentielle zu- und Abnahme der Steigung ist die obige Funktion entsprechend anzupassen. Für die ersten Tests wird darauf jedoch verzichtet und eine rein lineare Funktion gewählt.\\
 Eine weitere Schwierigkeit besteht darin, den Roving nach jedem Durchgang zielgenau und mit einem definierten Versatz zum vorherigen Durchgang auf das Rohr aufzubringen. Hierfür ist es wichtig die genaue Breite des Rovings und die gewünschte Mindestüberlappung einzelner Windungen zu kennen. Die Position der Spindeln muss natürlich auch weiterhin exakt sein, es dürfen sich vor allem keine Fehler über die Wickelgänge aufaddieren. Insbesondere die Enden an denen umgekehrt wird und entsprechend beschleunigt bzw. abgebremst werden muss, können dabei zu Problemen führen.\\
 Dafür wird jetzt die Windung vom Zylinder- in das kartesische Koordinatensystem umgerechnet, eine Windung setzt sich also aus einem Sinus- und einem Cosinusterm zusammen.\\
 \begin{eqnarray}\label{zylinder2kartesischHin}
@@ -630,9 +632,14 @@ Die jeweiligen $n$ Punkte werden mit der Formel \eqref{steigungHin} auf jeweils 
 \subsection{Konzept}
 Der Grundaufbau der Wickelmaschine gleicht dem einer Drehbank. Es gibt eine Drehachse die den Wickelkörper rotiert, sowie einen Arm der auf einer Achse längs dem Wickelkörper bewegt wird. Dieser Arm führt den Roving und sorgt für eine exakte Platzierung, weshalb der Arm zusätzlich senkrecht zur Wickelachse bewegbar und rotierbar ist. Auf diese Weiße lässt sich der Abstand zwischen Wickelkörper und Arm variieren sowie die Orientierung an den aktuellen Wickelwinkel anpassen. Zur Ansteuerung der Achsen kommen Schrittmotoren zum Einsatz, da diese zum einen vergleichsweise einfach und kostengünstig ansteuerbar sind und zum andern fertige Module mit Steppertreibern verfügbar sind. Über den oben beschriebenen drehbaren Arm wird der Roving zum Wickelkörper geführt, wobei dieser zuvor mit Epoxydharz getränkt werden muss, da dies je nach Gewebedicke nach dem Wickeln nur schlecht möglich ist. Außerdem ist durch die vorgesehene automatische Tränk- und Abstreifvorrichtung eine gleichmäßige Harzmenge garantiert. Durch eine variable Positionierung des Reitstocks sind Wickelkörper in fast beliebigen Längen und Durchmessern, bis zu \SI{1200}{\milli\metre} Länge und unter \SI{250}{\milli\metre} Durchmesser, möglich.
 
-
 \section{Mechanik}
-Der mechanische Aufbau der Wickelmaschine wurde, soweit nötig, als 3D-Modell erstellt. Manche Details wie Schrauben wurden dabei an irrelevanten Stellen weggelassen. Das Augenmerk liegt insbesondere auf den Teilen die in der Fräse selbst herzustellen sind, wie z.B. die Motorhalterungen, der Reitstock und die Verbindungen zu Teilen wie den Schrittmoten. Außerdem lässt sich in dem Maschinenmodell überprüfen, dass die Verbindungen und Lage der verschiedenen Teile zueinander stimmt. Im Folgenden sollen die einzelnen Teile der Wickelmaschine näher betrachtet und erklärt werden.
+Der mechanische Aufbau der Wickelmaschine wurde, soweit nötig, als 3D-Modell erstellt. Manche Details wie Schrauben wurden dabei an irrelevanten Stellen weggelassen. Das Augenmerk liegt insbesondere auf den Teilen die in der Fräse selbst herzustellen sind, wie z.B. die Motorhalterungen, der Reitstock und die Verbindungen zu Teilen wie den Schrittmotoren. Außerdem lässt sich in dem Maschinenmodell überprüfen, dass die Verbindungen und Lage der verschiedenen Teile zueinander stimmt. Im Folgenden sollen die einzelnen Teile der Wickelmaschine näher betrachtet und erklärt werden.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\columnwidth]{NX_Screenshots/gesamt3.png}
+	\caption{Gesamtansicht des 3D-Modells}
+\end{figure}
+
 
 \subsection{Grundplatte}
 Die Grundplatte dient als Aufnahme für die weiteren Teile wie Spindel, Reitstock, Linearführungen, usw. Aus Kosten- und Gewichtsgründen wird diese aus Multiplexplatte hergestellt, weil die Festigkeit für die zu erwartende geringe mechanische Belastung ausreichend ist. Auf dieser müssen Spindelhalter, Reitstock und die lange Linearführung montiert werden. Der Reitstock ist zusätzlich verschiebbar um die Maschine auf verschieden lange Wickelkörper anpassen zu können.
@@ -640,55 +647,55 @@ Die Grundplatte dient als Aufnahme für die weiteren Teile wie Spindel, Reitstoc
 \subsection{Spindel}
 Die Spindel nimmt eine Seite des Wickelkörpers auf und treibt diesen mithilfe eines Schrittmotors an. Die Aufnahme für den Wickelkörper ist kegelförmig um unterschiedlich große Rohrdurchmesser von innen Spannen zu können. Die Kraftübertragung geschieht über Reibung wie bei einer Drehbank, in der Material zwischen Spitzen gespannt ist. Für spezielle Wickelkörper ist der Kegel zusätzlich noch austauschbar. In der Achsenbeschreibung hat diese Achse den Buchstaben C, also parallel zur linearen Achse Z gelegen.
 
-%\begin{figure}[H]
+\begin{figure}[h]
 %	\centering
-%	\includegraphics[width=0.8\textwidth]{NX_Screenshots/spindel.png}
-%	\caption{angetriebene Spindel inkl. Halterung und Aufnahmekegel} 
-%	\label{fig:spindel}
-%\end{figure}
+	\includegraphics[width=1\columnwidth]{NX_Screenshots/spindel}
+	\caption{angetriebene Spindel inkl. Halterung und Aufnahmekegel} 
+	\label{fig:spindel}
+\end{figure}
 
 \subsection{Reitstock}
-Am Reitstock wird der Wickelkörper leicht drehbar gegengelagert. Um unterschiedlich lange Wickelkörper verwenden zu können ist dieser in Z-Richtung stufenlos verschiebbar. Der Aufbau ist ähnlich dem der Spindel mit Ausnahme des fehlenden Antriebs. Zusätzlich ist eine Feder vorgesehen die den Kegel auf den Wickelkörper drückt. Dies ermöglicht ein einfacheres Wechseln des Wickelkörpers, ohne den Reitstock selbst verschieben zu müssen.
+Am Reitstock wird der Wickelkörper leicht drehbar gegen gelagert. Um unterschiedlich lange Wickelkörper verwenden zu können ist dieser in Z-Richtung stufenlos verschiebbar. Der Aufbau ist ähnlich dem der Spindel mit Ausnahme des fehlenden Antriebs. Zusätzlich ist eine Feder vorgesehen die den Kegel auf den Wickelkörper drückt. Dies ermöglicht ein einfacheres Wechseln des Wickelkörpers, ohne den Reitstock selbst verschieben zu müssen.
 
 
 \subsection{Wickelwagen}
 Der Wickelwagen lagert auf einer langen Linearführung und führt den eigentlichen Wickelvorgang aus. Da darauf später nicht wenig Gewicht lagert, muss er robust ausgeführt und gegen Verkippen gesichert sein. Wir haben uns entschieden, eine Linearführung mit Kugelumlauflagerung im Wagen zu kaufen und nicht auf sonst im Hobbybereich anzutreffende unterstützte Wellen oder Schubladenschienen zurückzugreifen.\\
 Der Wagen führt demnach die Bewegung in der Achse Z aus und trägt eine weitere, kleine Linearführung, die dann die Bewegung in X-Richtung ermöglicht. Damit entspricht der Wagen dem Planschlitten einer Drehbank. Die folgenden Abbildungen zeigen die verwendeten Linearführungen.
 
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{bilder/IMG_2616.JPG}
-%	\caption{Linearführungen im demontierten Zustand} 
-%	\label{fig:wagen}
-%\end{figure}
-%
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{NX_Screenshots/wagen.png}
-%	\caption{Wagen der Linearführung in NX} 
-%	\label{fig:wagen_foto}
-%\end{figure}
-%
-%
-%\subsection{Dreharm}
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{NX_Screenshots/arm_vorne.png}
-%	\caption{Dreharm mit Rovingführung} 
-%	\label{fig:dreharm}
-%\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\columnwidth]{bilder/IMG_2616.JPG}
+	\caption{Linearführungen im demontierten Zustand} 
+	\label{fig:wagen}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\columnwidth]{NX_Screenshots/wagen.png}
+	\caption{Wagen der Linearführung in NX} 
+	\label{fig:wagen_foto}
+\end{figure}
+
+
+\subsection{Dreharm}
+\begin{figure}
+	\centering
+	\includegraphics[width=1\columnwidth]{NX_Screenshots/arm_vorne.png}
+	\caption{Dreharm mit Rovingführung} 
+	\label{fig:dreharm}
+\end{figure}
 In Abbildung \ref{fig:dreharm} sieht man die Adapterplatte, die auf dem Wickelwagen (unten in der Mitte) befestigt wird. Das senkrechte Blechstück trägt dann einen weiteren Schrittmotor und den Rovingdurchlass mit der Dreheinheit. Diese sorgt dafür, dass auch bei komplexeren Wickelgeometrien, wie beispielsweise Flaschen oder unterschiedlich dicken Gegenständen, der Roving stets korrekt positioniert wird. Auf einer CNC-Maschine wäre dies die zur X-Achse parallele Drehachse, die dann mit dem Buchstaben A bezeichnet wird. Da der Roving zum Zeitpunkt des Wickelns schon mit Harz getränkt ist, müssen alle Teile, die mit dem Roving in Berührung kommen, aus Teflon hergestellt werden. Hier trifft das auf die kleine Umlenkrolle vorne am Drehaufsatz zu, diese wird durch zwei Schrauben gehalten und ist so leicht ausbaubar oder sogar austauschbar.\\
 Der Antrieb der X-Achse ist hier ausgeblendet, um die Drehvorrichtung der Achse A besser zeigen zu können.
 
 
 \subsection{Tränkeinheit}
 Bevor das Roving auf den Wickelkörper aufgebracht werden kann muss es zuerst mit Harz getränkt werden. Zu diesem Zweck ist ein Gefäß vorgesehen, das auf dem Wagen in Z und X Richtung mitfährt und mit einer ausreichenden Menge an Harz gefüllt ist. Dabei wurde darauf geachtet, dass möglichst wenig Harz in dem Behälter verbleibt und verschwendet wird. Im wesentlichen läuft das Roving in der Tränkeinheit über zwei Umlenkungen und einen Abstreifer an dem das überschüssige Harz entfernt und dem Behälter wieder zugeführt wird. Anschließend läuft das Roving nur noch durch den Dreharm und dessen Umlenkrolle aus Teflon um die Anzahl der zu reinigenden Teile gering zu halten.
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[angle=270, width=1\textwidth]{bilder/skizze.jpg}
-%	\caption{Skizze der Tränkeinrichtung} 
-%	\label{fig:123}
-%\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[angle=270, width=1\columnwidth]{bilder/skizze.jpg}
+	\caption{Skizze der Tränkeinrichtung} 
+	\label{fig:123}
+\end{figure}
 
 
 
@@ -697,22 +704,22 @@ Die verwendete Software besteht aus zwei Teilen die im folgenden näher beschrie
 \subsection{G-Code Erzeugung}
 \label{software}
 Die Steuerung der Wickelmaschine erfolgt über normale G-Code Kommandos wie sie auch bei vielen anderen CNC-Maschinen verwendet werden. Für Fräs- und Drehmaschinen gibt es zur Erzeugung von G-Code anhand eine CAD Modells bereits viele Programme, für Wickelmaschinen leider nur sehr wenige und noch dazu sehr teure. Deshalb wurde auf Basis des unter \ref{mathematik} beschriebenen mathematischen Modells eine PC-Software in C++ entwickelt die  anhand der eingestellten Parameter passenden G-Code erzeugt. In Abbildung \ref{fig:g-code} ist das graphische Userinterface zu sehen. 
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=1\textwidth]{bilder/carbowickler_software.png}
-%	\caption{Programm zur G-Code Erzeugung} 
-%	\label{fig:g-code}
-%\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\columnwidth]{bilder/carbowickler_software.png}
+	\caption{Programm zur G-Code Erzeugung} 
+	\label{fig:g-code}
+\end{figure}
 
 
 \subsection{grbl Interface}
 Die verwendete Steuerung basiert auf grbl\cite{grbl}, welches bis zu vier Schrittmotoren anhand von G-Code ansteuert. Zum Übertragen des G-Codes an die Steuerung existieren bereits mehrere fertige Programme die eingesetzt werden können, weshalb es nicht nötig ist hierfür ein Neues zu entwickeln. Stattdessen ging es primäre darum G-Code zu erzeugen der zu dem gewünschten Wickelmuster führt, siehe hierzu \ref{software}. Die Hardware der Steuerung ist in \ref{fig:grbl_board} zu sehen.
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=1\textwidth]{bilder/IMG_2662.JPG}
-%	\caption{grbl-board mit stepsticks} 
-%	\label{fig:grbl_board}
-%\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\columnwidth]{bilder/IMG_2662.JPG}
+	\caption{grbl-board mit stepsticks} 
+	\label{fig:grbl_board}
+\end{figure}
 
 
 
